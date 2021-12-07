@@ -15,7 +15,7 @@ exports.createSingleTask = async (req, res, next) => {
       createdAt: req.body.createdAt,
     });
 
-    const doc = await newAct.save({ ...req.body });
+    const doc = await newTask.save({ ...req.body });
 
     res.status(201).json({
       status: "success",

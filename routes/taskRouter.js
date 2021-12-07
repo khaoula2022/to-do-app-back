@@ -27,3 +27,5 @@ router.get("/tasks", function (req, res) {
 });
 
 router.route("/").post(tasks.createSingleTask);
+
+module.exports = router;

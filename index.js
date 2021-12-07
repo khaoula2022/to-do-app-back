@@ -7,6 +7,7 @@ const server = http.createServer(app);
 const bodyParser = require("body-parser");
 const path = require("path");
 const PORT = process.env.PORT || 4000;
+const taskRouter = require("./routes/taskRouter");
 
 const CONNECTION_URL =
   "mongodb+srv://internship:internship@cluster0.hqnas.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
@@ -28,3 +29,9 @@ mongoose
     )
   )
   .catch((error) => console.log(`${error} did not connect`));
+
+/**
+ * use routers here
+ */
+
+app.use("/tasks", taskRouter);
