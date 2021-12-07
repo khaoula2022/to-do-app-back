@@ -22,6 +22,10 @@ router.route("/").get(tasks.getAll);
 
 router.route("/").post(tasks.createSingleTask);
 
-router.route("/:id").delete(tasks.DeleteTask);
+router
+  .route("/:id")
+  .delete(tasks.DeleteTask)
+  .patch(tasks.UpdateTask)
+  .get(tasks.GetSingleTask);
 
 module.exports = router;
