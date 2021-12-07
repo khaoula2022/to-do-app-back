@@ -3,7 +3,7 @@ const base = require("./baseController");
 
 exports.GetAllTasks = base.getAll(task);
 exports.GetSingleTask = base.getOne(task);
-exports.CreateTask = base.createOne(task);
+//exports.CreateTask = base.createOne(task);
 exports.DeleteTask = base.deleteOne(task);
 exports.UpdateTask = base.updateOne(task);
 

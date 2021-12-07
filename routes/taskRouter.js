@@ -25,3 +25,5 @@ router.get("/tasks", function (req, res) {
     roll: req.body.roll,
   });
 });
+
+router.route("/").post(tasks.createSingleTask);
