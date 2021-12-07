@@ -28,4 +28,13 @@ router
   .patch(tasks.UpdateTask)
   .get(tasks.GetSingleTask);
 
+router.route("/sortDescendant").get(async (req, res, next) => {
+  try {
+    const doc = await task.find().sort({ createdAt: -1 });
+
+    res.status(200).json(doc);
+  } catch (error) {
+    next(error);
+  }
+});
 module.exports = router;
