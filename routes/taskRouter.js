@@ -18,13 +18,7 @@ router.route("/:id").get(async (req, res, next) => {
   }
 });
 
-router.get("/tasks", function (req, res) {
-  res.send({
-    type: "GET",
-    name: req.body.title,
-    roll: req.body.roll,
-  });
-});
+router.route("/").get(tasks.getAll);
 
 router.route("/").post(tasks.createSingleTask);
 

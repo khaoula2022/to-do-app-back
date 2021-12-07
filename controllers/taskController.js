@@ -25,3 +25,17 @@ exports.createSingleTask = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.getAll = async (req, res, next) => {
+  try {
+    const doc = await task.find();
+
+    res.status(200).json({
+      status: "success",
+      results: doc.length,
+      data: doc,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
