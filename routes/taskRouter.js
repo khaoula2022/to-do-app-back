@@ -17,3 +17,11 @@ router.route("/:id").get(async (req, res, next) => {
     next(error);
   }
 });
+
+router.get("/tasks", function (req, res) {
+  res.send({
+    type: "GET",
+    name: req.body.title,
+    roll: req.body.roll,
+  });
+});
