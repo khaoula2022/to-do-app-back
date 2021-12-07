@@ -4,7 +4,8 @@
   "description": "a mini to-do-app created using express JS ",
   "main": "index.js",
   "scripts": {
-    "test": "npm test"
+    "test": "npm test",
+    "start" :"nodemon index.js"
   },
   "repository": {
     "type": "git",
