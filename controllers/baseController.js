@@ -34,18 +34,40 @@ exports.getOne = (Model) => async (req, res, next) => {
   }
 };
 
-
 exports.createOne = (Model) => async (req, res, next) => {
-    try {
-      const doc = await Model.create(req.body);
-  
-      res.status(201).json({
-        status: "success",
-        data: doc
-       
-      });
-    } catch (error) {
-      next(error);
+  try {
+    const doc = await Model.create(req.body);
+
+    res.status(201).json({
+      status: "success",
+      data: doc,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.updateOne = (Model) => async (req, res, next) => {
+  try {
+    const doc = await Model.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!doc) {
+      return next(
+        new AppError(404, "fail", "No document found with that id"),
+        req,
+        res,
+        next
+      );
     }
-  };
-  
+
+    res.status(200).json({
+      status: "success",
+      data: doc,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
