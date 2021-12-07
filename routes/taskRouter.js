@@ -22,4 +22,6 @@ router.route("/").get(tasks.getAll);
 
 router.route("/").post(tasks.createSingleTask);
 
+router.route("/:id").delete(tasks.DeleteTask);
+
 module.exports = router;
