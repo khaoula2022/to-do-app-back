@@ -10,3 +10,12 @@ const PORT = process.env.PORT || 4000;
 
 const CONNECTION_URL =
   "mongodb+srv://internship:internship@cluster0.hqnas.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+
+/**
+ * configure express app here
+ */
+app.use(bodyParser.json({ limit: "30mb", extended: true }));
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ limit: "30mb", extended: true }));
+app.use(express.static(path.join(__dirname, "public")));
