@@ -21,9 +21,17 @@ const userSchema = new mongoose.Schema({
   avatar: String,
   password: {
     type: String,
+    minLength: 6,
+    select: false,
   },
   passwordConfirm: {
     type: String,
+    validate: {
+      validator: function (el) {
+        return el === this.password;
+      },
+      message: "Your password and confirmation password are not the same",
+    },
   },
 });
 
