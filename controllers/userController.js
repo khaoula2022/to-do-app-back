@@ -42,3 +42,46 @@ exports.signup = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.login = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return next(
+        new AppError(404, "fail", "Please provide email or password"),
+        req,
+        res,
+        next
+      );
+    }
+
+    const user = await User.findOne({
+      email,
+    }).select("+password");
+
+    if (!user || !(await user.correctPassword(password, user.password))) {
+      return next(
+        new AppError(401, "fail", "Email or Password is wrong"),
+        req,
+        res,
+        next
+      );
+    }
+
+    const token = createToken(user.id);
+
+
+    user.password = undefined;
+
+    res.status(200).json({
+      status: "success",
+      token,
+      data: {
+        user,
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
