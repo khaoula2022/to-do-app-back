@@ -7,7 +7,12 @@ const server = http.createServer(app);
 const bodyParser = require("body-parser");
 const path = require("path");
 const PORT = process.env.PORT || 4000;
+
+/**
+ * configure routers
+ */
 const taskRouter = require("./routes/taskRouter");
+const userRouter = require("./routers/userRouter");
 
 const CONNECTION_URL =
   "mongodb+srv://internship:internship@cluster0.hqnas.mongodb.net/internshipDatabase?retryWrites=true&w=majority";
@@ -35,3 +40,4 @@ mongoose
  */
 
 app.use("/tasks", taskRouter);
+app.use("/user", userRouter);
