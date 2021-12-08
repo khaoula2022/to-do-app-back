@@ -1,6 +1,20 @@
 const User = require("../models/userModel");
 const base = require("./baseController");
 const AppError = require("../utils/appError");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
+
+const createToken = (id) => {
+  return jwt.sign(
+    {
+      id,
+    },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: process.env.JWT_EXPIRES_IN,
+    }
+  );
+};
 
 exports.signup = async (req, res, next) => {
   try {
