@@ -9,7 +9,9 @@ const task = mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  creator: String,
+  creator: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+
+  //creator: String,
   createdAt: {
     type: Date,
     default: Date.now(),
