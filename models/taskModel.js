@@ -14,6 +14,9 @@ const task = mongoose.Schema({
     type: Date,
     default: Date.now(),
   },
+  deadline: {
+    type: Date,
+  },
 });
 const tasks = mongoose.model("task", task);
 module.exports = tasks;

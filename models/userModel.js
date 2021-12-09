@@ -14,11 +14,8 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
     validate: [validator.isEmail, " Please provide a valid email"],
   },
-  birthdate: {
-    type: Date,
-    default: new Date(),
-  },
-  avatar: String,
+
+  //avatar: String,
   password: {
     type: String,
     minLength: 6,
@@ -43,12 +40,11 @@ userSchema.methods.correctPassword = async function (
 };
 
 userSchema.pre("save", async function (next) {
-  
   if (!this.isModified("password")) {
     return next();
   }
- this.password = await bcrypt.hash(this.password, 12);
- next();
+  this.password = await bcrypt.hash(this.password, 12);
+  next();
 });
 const User = mongoose.model("User", userSchema);
 module.exports = User;
