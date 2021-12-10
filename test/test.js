@@ -18,4 +18,11 @@ describe("test Endpoints", () => {
     expect(res.statusCode).toEqual(201);
     // expect(res.body).toHaveProperty("post");
   });
+
+  //******************************************delete test *******************************
+
+  it("should delete a task", async () => {
+    const res = await request(app).delete("/tasks/61b393dd2483d9ac6046de7b");
+    expect(res.statusCode).toEqual(204);
+  });
 });
