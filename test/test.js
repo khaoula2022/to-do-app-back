@@ -49,4 +49,16 @@ describe("test Endpoints", () => {
       );
     }
   });
+  /*********************************e-mail test */
+  it("should throw an error if the user provides an unvalid e-mail", async () => {
+    try {
+      await new User({
+        username: "khaoula",
+        email: "example.tn",
+        password: "123456",
+      }).save();
+    } catch (err) {
+      expect(err.errors.email.message).toEqual(" Please provide a valid email");
+    }
+  });
 });
