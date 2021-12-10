@@ -33,4 +33,20 @@ describe("test Endpoints", () => {
     const res = await request(app).get(`/tasks/" ${taskId}`);
     expect(res.statusCode).toEqual(404);
   });*/
+
+  /***************************pawwdor and confirm password must match  */
+  it("should throw an error if password and confirm password are the the same", async () => {
+    try {
+      await new User({
+        username: "sam",
+        email: "example@esprit.tn",
+        password: "1234521",
+        passwordConfirm: "54875454",
+      }).save();
+    } catch (err) {
+      expect(err.errors.passwordConfirm.message).toEqual(
+        "Your password and confirmation password are not the same"
+      );
+    }
+  });
 });
