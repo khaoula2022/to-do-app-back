@@ -47,8 +47,8 @@ describe("test Endpoints", () => {
     const res = await request(app).get(`/tasks/" ${taskId}`);
     expect(res.statusCode).toEqual(404);
   });*/
-
-  /***************************pawwdor and confirm password must match  */
+  /************************************************USER TESTS */
+  /***************************password and confirm password must match  */
   it("should throw an error if password and confirm password are the the same", async () => {
     try {
       await new User({
