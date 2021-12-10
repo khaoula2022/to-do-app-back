@@ -38,7 +38,7 @@ exports.signup = async (req, res, next) => {
       from: "kimyschool2021@gmail.com", // TODO: email sender
       to: user.email, // TODO: email receiver
       subject: "Welcome To-do ",
-      text: `welcome , you start creating tasks`,
+      text: `welcome , you  can start creating tasks`,
     };
     transporter.sendMail(mailOptions, (err, data) => {
       if (err) {
