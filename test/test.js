@@ -25,4 +25,12 @@ describe("test Endpoints", () => {
     const res = await request(app).delete("/tasks/61b393dd2483d9ac6046de7b");
     expect(res.statusCode).toEqual(204);
   });
+
+  /*******************************Not found test  (needs to be fixed ) */
+
+  /*it("Server error if resource not found ", async () => {
+    const taskId = 4654;
+    const res = await request(app).get(`/tasks/" ${taskId}`);
+    expect(res.statusCode).toEqual(404);
+  });*/
 });
