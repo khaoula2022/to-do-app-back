@@ -9,6 +9,8 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const PORT = process.env.PORT || 4000;
 
+//const db = process.env.DATABASE;
+
 /**
  * configure routers
  */
@@ -27,6 +29,12 @@ app.use(express.json());
 app.use(express.urlencoded({ limit: "30mb", extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
+/**
+ * use routers here
+ */
+
+/////mongoose
+
 mongoose
   .connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() =>
@@ -35,10 +43,7 @@ mongoose
     )
   )
   .catch((error) => console.log(`${error} did not connect`));
-
-/**
- * use routers here
- */
-
 app.use("/tasks", taskRouter);
 app.use("/user", userRouter);
+
+module.exports = app;

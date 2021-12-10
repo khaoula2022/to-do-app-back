@@ -18,6 +18,7 @@ const task = mongoose.Schema({
   },
   deadline: {
     type: Date,
+    min: Date.now(),
   },
 });
 const tasks = mongoose.model("task", task);
