@@ -28,10 +28,22 @@ router
   .patch(tasks.UpdateTask)
   .get(tasks.GetSingleTask);
 
-router.route("/sortDescendant").get(async (req, res, next) => {
+router.route("/sort").get(async (req, res, next) => {
   try {
-    const doc = await task.find().sort({ createdAt: -1 });
+    const doc = await task.find().sort({ label: -1 });
 
+    res.status(200).json(doc);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.route("/search/:search").get(async (req, res, next) => {
+  try {
+    const { search } = req.params;
+    const doc = await task.find({
+      $or: [{ label: { $regex: search, $options: "i" } }],
+    });
     res.status(200).json(doc);
   } catch (error) {
     next(error);

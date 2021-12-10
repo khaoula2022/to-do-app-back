@@ -3,6 +3,7 @@ const base = require("./baseController");
 const AppError = require("../utils/appError");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const nodemailer = require("nodemailer");
 
 const createToken = (id) => {
   return jwt.sign(
@@ -18,6 +19,13 @@ const createToken = (id) => {
 
 exports.signup = async (req, res, next) => {
   try {
+    let transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: "khaouladevops2022@gmail.com",
+        pass: "devops2022",
+      },
+    });
     const user = await User.create({
       username: req.body.username,
       email: req.body.email,
@@ -26,7 +34,17 @@ exports.signup = async (req, res, next) => {
       birthdate: req.body.birthdate,
       avatar: req.body.avatar,
     });
-
+    let mailOptions = {
+      from: "kimyschool2021@gmail.com", // TODO: email sender
+      to: user.email, // TODO: email receiver
+      subject: "Welcome To-do ",
+      text: `welcome , you start creating tasks`,
+    };
+    transporter.sendMail(mailOptions, (err, data) => {
+      if (err) {
+        console.log("Error occurs", err);
+      } else console.log("Email sent!!!");
+    });
     const token = createToken(user.id);
 
     user.password = undefined;
@@ -70,7 +88,6 @@ exports.login = async (req, res, next) => {
     }
 
     const token = createToken(user.id);
-
 
     user.password = undefined;
 

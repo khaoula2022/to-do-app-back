@@ -1,4 +1,5 @@
 const AppError = require("../utils/appError");
+const APIFeatures = require("../utils/ApiFeatures");
 
 exports.getAll = (Model) => async (req, res, next) => {
   try {
