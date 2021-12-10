@@ -9,14 +9,17 @@ exports.UpdateTask = base.updateOne(task);
 
 exports.createSingleTask = async (req, res, next) => {
   try {
+    const user = req.user;
+
     const newTask = new task({
       label: req.body.label,
       description: req.body.description,
       createdAt: req.body.createdAt,
+      deadline: req.body.deadline,
     });
 
-    const doc = await newTask.save({ ...req.body });
-
+    const doc = await newTask.save({ ...req.body, creator: user });
+    console.log(doc);
     res.status(201).json({
       status: "success",
       data: doc,
@@ -28,7 +31,14 @@ exports.createSingleTask = async (req, res, next) => {
 
 exports.getAll = async (req, res, next) => {
   try {
-    const doc = await task.find();
+    const user = req.user;
+
+    const doc = await task
+      .find({
+        creator: user,
+      })
+      .sort({ _id: -1 })
+      .populate("creator");
 
     res.status(200).json({
       status: "success",
