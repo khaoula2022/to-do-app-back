@@ -14,8 +14,20 @@ describe("test Endpoints", () => {
     const res = await request(app).post("/tasks").send({
       label: "this is a test task",
       description: "this is a test task description",
+      deadline: "12/30/2021",
     });
     expect(res.statusCode).toEqual(201);
+    // expect(res.body).toHaveProperty("post");
+  });
+
+  /******************** Creation of task with a date in the past  */
+  it("should generate an error if date deadline is in the past", async () => {
+    const res = await request(app).post("/tasks").send({
+      label: "this is a test task",
+      description: "this is a test task description",
+      deadline: "12/30/2020",
+    });
+    expect(res.statusCode).toEqual(500);
     // expect(res.body).toHaveProperty("post");
   });
 
