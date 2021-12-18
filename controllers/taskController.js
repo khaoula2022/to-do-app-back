@@ -18,7 +18,7 @@ exports.createSingleTask = async (req, res, next) => {
       description: req.body.description,
       createdAt: req.body.createdAt,
       deadline: req.body.deadline,
-      creator: user,
+      creator: user.username,
     });
 
     const doc = await newTask.save({ ...req.body });
@@ -34,12 +34,12 @@ exports.createSingleTask = async (req, res, next) => {
 
 exports.getAll = async (req, res, next) => {
   try {
-    const user = req.user._id;
+    const user = req.user;
     // console.log("reeq" + user); taatini undefined
 
     const doc = await task
       .find({
-        creator: user,
+        creator: user.username,
       })
       .sort({ _id: -1 })
       .populate("creator");
