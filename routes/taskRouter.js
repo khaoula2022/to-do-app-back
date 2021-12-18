@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var task = require("../models/taskModel");
 const tasks = require("../controllers/taskController");
+const auth = require("../middleware/authMiddleware");
 
 router.route("/:id").get(async (req, res, next) => {
   try {
@@ -18,15 +19,17 @@ router.route("/:id").get(async (req, res, next) => {
   }
 });
 
-router.route("/").get(tasks.getAll);
+//router.route("/").get(tasks.getAll);
+router.get("/", auth, tasks.getAll);
+router.post("/", auth, tasks.createSingleTask);
 
-router.route("/").post(tasks.createSingleTask);
+//router.route("/").post(tasks.createSingleTask);
 
 router
   .route("/:id")
-  .delete(tasks.DeleteTask)
-  .patch(tasks.UpdateTask)
-  .get(tasks.GetSingleTask);
+  .delete(auth, tasks.DeleteTask)
+  .patch(auth, tasks.UpdateTask)
+  .get(auth, tasks.GetSingleTask);
 
 router.route("/sort").get(async (req, res, next) => {
   try {

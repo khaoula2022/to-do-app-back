@@ -6,6 +6,12 @@ const bcrypt = require("bcryptjs");
 const nodemailer = require("nodemailer");
 
 const createToken = (id) => {
+  return jwt.sign({ id: User.id }, "RANDOM_TOKEN_SECRET", {
+    expiresIn: "24h",
+  });
+};
+
+/*const createToken = (id) => {
   return jwt.sign(
     {
       id,
@@ -16,6 +22,7 @@ const createToken = (id) => {
     }
   );
 };
+/******************************SIGNUP */
 
 exports.signup = async (req, res, next) => {
   try {
@@ -31,11 +38,9 @@ exports.signup = async (req, res, next) => {
       email: req.body.email,
       password: req.body.password,
       passwordConfirm: req.body.passwordConfirm,
-      birthdate: req.body.birthdate,
-      avatar: req.body.avatar,
     });
     let mailOptions = {
-      from: "kimyschool2021@gmail.com", // TODO: email sender
+      from: "khaouladevops2022@gmail.com", // TODO: email sender
       to: user.email, // TODO: email receiver
       subject: "Welcome To-do ",
       text: `welcome , you  can start creating tasks`,
@@ -54,13 +59,14 @@ exports.signup = async (req, res, next) => {
       token,
       data: {
         user,
+        token,
       },
     });
   } catch (err) {
     next(err);
   }
 };
-
+/*****************************LOGIN */
 exports.login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
@@ -88,6 +94,7 @@ exports.login = async (req, res, next) => {
     }
 
     const token = createToken(user.id);
+    console.log(token);
 
     user.password = undefined;
 
@@ -96,6 +103,7 @@ exports.login = async (req, res, next) => {
       token,
       data: {
         user,
+        token,
       },
     });
   } catch (err) {

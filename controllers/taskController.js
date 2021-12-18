@@ -9,7 +9,8 @@ exports.UpdateTask = base.updateOne(task);
 
 exports.createSingleTask = async (req, res, next) => {
   try {
-    const user = req.user;
+    const user = req.header("Authorization");
+    console.log("hiiiiiiiiiiiiiii" + user);
 
     const newTask = new task({
       label: req.body.label,

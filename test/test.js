@@ -31,14 +31,14 @@ describe("test Endpoints", () => {
     // expect(res.body).toHaveProperty("post");
   });
 
-  //******************************************delete test *******************************/
+  /*delete test *******************************/
 
-  /*
+  
   it("should delete a task", async () => {
-    const res = await request(app).delete("/tasks/61b393dd2483d9ac6046de7b");
+    const res = await request(app).delete("/tasks/61b510f5ef46832413a6ff60");
     expect(res.statusCode).toEqual(204);
   });
-  */
+  
 
   /*******************************Not found test  (needs to be fixed ) */
 

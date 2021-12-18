@@ -8,6 +8,7 @@ const server = http.createServer(app);
 const bodyParser = require("body-parser");
 const path = require("path");
 const PORT = process.env.PORT || 4000;
+const authMiddleware = require("./middleware/authMiddleware");
 
 //const db = process.env.DATABASE;
 
@@ -45,5 +46,6 @@ mongoose
   .catch((error) => console.log(`${error} did not connect`));
 app.use("/tasks", taskRouter);
 app.use("/user", userRouter);
+app.use(authMiddleware);
 
 module.exports = app;
