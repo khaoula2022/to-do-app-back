@@ -5,10 +5,11 @@ const express = require("express");
 const http = require("http");
 const app = express();
 const server = http.createServer(app);
-const bodyParser = require("body-parser");
+//const bodyParser = require("body-parser");
 const path = require("path");
 const PORT = process.env.PORT || 4000;
 const authMiddleware = require("./middleware/authMiddleware");
+var bodyParser = require("body-parser");
 
 //const db = process.env.DATABASE;
 
@@ -29,7 +30,12 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ limit: "30mb", extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
-
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
+app.use(bodyParser.json());
 /**
  * use routers here
  */
@@ -46,6 +52,6 @@ mongoose
   .catch((error) => console.log(`${error} did not connect`));
 app.use("/tasks", taskRouter);
 app.use("/user", userRouter);
-app.use(authMiddleware);
+app.use(authMiddleware.protect);
 
 module.exports = app;

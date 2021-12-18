@@ -7,7 +7,8 @@ const task = mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  creator: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  //creator: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  creator: String,
 
   createdAt: {
     type: Date,

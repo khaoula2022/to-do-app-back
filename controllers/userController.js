@@ -6,7 +6,7 @@ const bcrypt = require("bcryptjs");
 const nodemailer = require("nodemailer");
 
 const createToken = (id) => {
-  return jwt.sign({ id: User.id }, "RANDOM_TOKEN_SECRET", {
+  return jwt.sign({ id: User._id }, "RANDOM_TOKEN_SECRET", {
     expiresIn: "24h",
   });
 };
@@ -83,6 +83,7 @@ exports.login = async (req, res, next) => {
     const user = await User.findOne({
       email,
     }).select("+password");
+    console.log("logiiiiiiiiiiiin" + user);
 
     if (!user || !(await user.correctPassword(password, user.password))) {
       return next(
@@ -93,20 +94,53 @@ exports.login = async (req, res, next) => {
       );
     }
 
-    const token = createToken(user.id);
+    const token = createToken(user._id);
     console.log(token);
 
     user.password = undefined;
 
     res.status(200).json({
       status: "success",
+
       token,
+      userId: user._id,
+      token: jwt.sign({ userId: user._id }, "RANDOM_TOKEN_SECRET", {
+        expiresIn: "2m",
+      }),
       data: {
         user,
         token,
       },
     });
+    req.user = user;
+
+    console.log("useeeeeeeeeeer  " + user);
+    req.userIdd = user.email;
+    console.log("this is userIDDDDD" + req.userIdd);
+    console.log("this is email" + user.email);
   } catch (err) {
     next(err);
   }
 };
+/*exports.login = async (req, res, next) => {
+  const user = await User.findOne({ email: req.body.email });
+
+  if (!user) {
+    return res.status(401).json({ error: "Utilisateur non trouvé !" });
+  }
+  bcrypt
+    .compare(req.body.password, user.password)
+    .then((valid) => {
+      if (!valid) {
+        return res.status(401).json({ error: "Mot de passe incorrect !" });
+      }
+      res.status(200).json({
+        userId: user._id,
+        token: jwt.sign({ userId: user._id }, "RANDOM_TOKEN_SECRET", {
+          expiresIn: "24h",
+        }),
+      });
+    })
+
+    .catch((error) => res.status(500).json({ error }));
+};*/
